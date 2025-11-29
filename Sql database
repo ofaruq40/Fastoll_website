@@ -1,0 +1,41 @@
+CREATE TABLE Users (
+    UserID INT PRIMARY KEY IDENTITY(1,1),
+    FirstName VARCHAR(100),
+    LastName VARCHAR(100),
+    UserType VARCHAR(10),
+    Email VARCHAR(100),
+    PhoneNumber VARCHAR(20),
+    VehicleNumber VARCHAR(20),
+    RFIDTagID VARCHAR(20),
+    SubscriptionStatus VARCHAR(20)
+);
+CREATE TABLE ParkingSpaces (
+    SpaceID INT PRIMARY KEY IDENTITY(1,1),
+    SpaceLocation VARCHAR(100),
+    SpaceType VARCHAR(20),
+    AvailabilityStatus VARCHAR(20)
+);
+CREATE TABLE ParkingTransactions (
+    TransactionID INT PRIMARY KEY IDENTITY(1,1),
+    UserID INT FOREIGN KEY REFERENCES Users(UserID),
+    SpaceID INT FOREIGN KEY REFERENCES ParkingSpaces(SpaceID),
+    EntryTime DATETIME,
+    ExitTime DATETIME,
+    TotalAmount DECIMAL(10,2)
+);
+CREATE TABLE Payments (
+    PaymentID INT PRIMARY KEY IDENTITY(1,1),
+    TransactionID INT FOREIGN KEY REFERENCES ParkingTransactions(TransactionID),
+    PaymentMethod VARCHAR(20),
+    AmountPaid DECIMAL(10,2),
+    PaymentDate DATETIME
+);
+CREATE TABLE SystemLogs (
+    LogID INT PRIMARY KEY IDENTITY(1,1),
+    RFIDTagID VARCHAR(20),
+    Action VARCHAR(10),
+    Timestamp DATETIME
+);
+
+
+
